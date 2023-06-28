@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Pipeline from "../components/Pipeline.svelte";
+
+export async function getStaticPaths() {
+  // see https://docs.astro.build/en/core-concepts/routing/#static-ssg-mode for how the routing works
+  const response = await fetch(
+    `${import.meta.env.KIARA_SERVICE_ENDPOINT}/pipelines/list`
+  );
+  const pipelines = await response.json();
+  return pipelines.map((p) => {
+    return { params: { pipeline: p } };
+  });
+}
+
+const { pipeline } = Astro.params;
+const response = await fetch(
+  `${import.meta.env.KIARA_SERVICE_ENDPOINT}/pipelines/structure/${pipeline}`
+);
+const data = await response.json();
+---
+
+<Layout title={pipeline}>
+  <a class="m-4" href="/">&larr;back to pipelines list</a>
+  <Pipeline pipeline={data} />
+</Layout>
