@@ -1,0 +1,432 @@
+{
+  "constants": {},
+  "defaults": {},
+  "pipeline_name": "victors_super_nice_test_workflow",
+  "steps": [
+    {
+      "module_type": "dummy",
+      "module_config": {
+        "title": "load_any_xml",
+        "inputs_schema": {
+          "default": {
+            "type": "any",
+            "optional": "true",
+            "doc": "Load XML"
+          }
+        },
+        "outputs_schema": {
+          "default": {
+            "type": "any",
+            "optional": "true",
+            "doc": "Loaded XML"
+          }
+        },
+        "desc": "Load it in an existing RDF database"
+      },
+      "is_resolved": false,
+      "step_id": "load_any_xml",
+      "manifest_src": {
+        "module_type": "dummy",
+        "module_config": {
+          "title": "load_any_xml",
+          "inputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Load XML"
+            }
+          },
+          "outputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Loaded XML"
+            }
+          },
+          "desc": "Load it in an existing RDF database"
+        },
+        "is_resolved": false
+      },
+      "input_links": {},
+      "module_details": {
+        "python_class_name": "Dummymodule",
+        "python_module_name": "kiara_plugin.streamlit.modules",
+        "full_name": "kiara_plugin.streamlit.modules.Dummymodule",
+        "module_config": {
+          "constants": {},
+          "defaults": {},
+          "inputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Load XML"
+            }
+          },
+          "outputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Loaded XML"
+            }
+          },
+          "title": "load_any_xml",
+          "desc": "Load it in an existing RDF database"
+        },
+        "inputs_schema": {
+          "default": {
+            "type": "any",
+            "type_config": {},
+            "default": "__not_set__",
+            "optional": true,
+            "is_constant": false,
+            "doc": {
+              "description": "Load XML",
+              "doc": null
+            }
+          }
+        },
+        "outputs_schema": {
+          "default": {
+            "type": "any",
+            "type_config": {},
+            "default": "__not_set__",
+            "optional": true,
+            "is_constant": false,
+            "doc": {
+              "description": "Loaded XML",
+              "doc": null
+            }
+          }
+        }
+      },
+      "doc": {
+        "description": "-- n/a --",
+        "doc": null
+      }
+    },
+    {
+      "module_type": "dummy",
+      "module_config": {
+        "title": "convert_to_basic_with_rdf_xml",
+        "inputs_schema": {
+          "default": {
+            "type": "any",
+            "optional": "true",
+            "doc": "Loaded XML"
+          }
+        },
+        "outputs_schema": {
+          "default": {
+            "type": "any",
+            "optional": "true",
+            "doc": "Loaded RDF, with each XML node becoming a RDF blank node "
+          }
+        },
+        "desc": "RDFXML library of SWI-Prolog"
+      },
+      "is_resolved": false,
+      "step_id": "convert_to_basic_with_rdf_xml",
+      "manifest_src": {
+        "module_type": "dummy",
+        "module_config": {
+          "title": "convert_to_basic_with_rdf_xml",
+          "inputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Loaded XML"
+            }
+          },
+          "outputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Loaded RDF, with each XML node becoming a RDF blank node "
+            }
+          },
+          "desc": "RDFXML library of SWI-Prolog"
+        },
+        "is_resolved": false
+      },
+      "input_links": {},
+      "module_details": {
+        "python_class_name": "Dummymodule",
+        "python_module_name": "kiara_plugin.streamlit.modules",
+        "full_name": "kiara_plugin.streamlit.modules.Dummymodule",
+        "module_config": {
+          "constants": {},
+          "defaults": {},
+          "inputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Loaded XML"
+            }
+          },
+          "outputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Loaded RDF, with each XML node becoming a RDF blank node "
+            }
+          },
+          "title": "convert_to_basic_with_rdf_xml",
+          "desc": "RDFXML library of SWI-Prolog"
+        },
+        "inputs_schema": {
+          "default": {
+            "type": "any",
+            "type_config": {},
+            "default": "__not_set__",
+            "optional": true,
+            "is_constant": false,
+            "doc": {
+              "description": "Loaded XML",
+              "doc": null
+            }
+          }
+        },
+        "outputs_schema": {
+          "default": {
+            "type": "any",
+            "type_config": {},
+            "default": "__not_set__",
+            "optional": true,
+            "is_constant": false,
+            "doc": {
+              "description": "Loaded RDF, with each XML node becoming a RDF blank node",
+              "doc": null
+            }
+          }
+        }
+      },
+      "doc": {
+        "description": "-- n/a --",
+        "doc": null
+      }
+    },
+    {
+      "module_type": "dummy",
+      "module_config": {
+        "title": "execute_rewrite_rules",
+        "inputs_schema": {
+          "default": {
+            "type": "any",
+            "optional": "true",
+            "doc": "Loaded RDF, set of rewrite rules"
+          }
+        },
+        "outputs_schema": {
+          "default": {
+            "type": "any",
+            "optional": "true",
+            "doc": "Rewritten RDF committing to the rewrite rules"
+          }
+        },
+        "desc": "RDFXML library in SWI-Prolog"
+      },
+      "is_resolved": false,
+      "step_id": "execute_rewrite_rules",
+      "manifest_src": {
+        "module_type": "dummy",
+        "module_config": {
+          "title": "execute_rewrite_rules",
+          "inputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Loaded RDF, set of rewrite rules"
+            }
+          },
+          "outputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Rewritten RDF committing to the rewrite rules"
+            }
+          },
+          "desc": "RDFXML library in SWI-Prolog"
+        },
+        "is_resolved": false
+      },
+      "input_links": {},
+      "module_details": {
+        "python_class_name": "Dummymodule",
+        "python_module_name": "kiara_plugin.streamlit.modules",
+        "full_name": "kiara_plugin.streamlit.modules.Dummymodule",
+        "module_config": {
+          "constants": {},
+          "defaults": {},
+          "inputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Loaded RDF, set of rewrite rules"
+            }
+          },
+          "outputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Rewritten RDF committing to the rewrite rules"
+            }
+          },
+          "title": "execute_rewrite_rules",
+          "desc": "RDFXML library in SWI-Prolog"
+        },
+        "inputs_schema": {
+          "default": {
+            "type": "any",
+            "type_config": {},
+            "default": "__not_set__",
+            "optional": true,
+            "is_constant": false,
+            "doc": {
+              "description": "Loaded RDF, set of rewrite rules",
+              "doc": null
+            }
+          }
+        },
+        "outputs_schema": {
+          "default": {
+            "type": "any",
+            "type_config": {},
+            "default": "__not_set__",
+            "optional": true,
+            "is_constant": false,
+            "doc": {
+              "description": "Rewritten RDF committing to the rewrite rules",
+              "doc": null
+            }
+          }
+        }
+      },
+      "doc": {
+        "description": "-- n/a --",
+        "doc": null
+      }
+    },
+    {
+      "module_type": "dummy",
+      "module_config": {
+        "title": "generate_rdfs_file",
+        "inputs_schema": {
+          "default": {
+            "type": "any",
+            "optional": "true",
+            "doc": "Loaded RDF"
+          }
+        },
+        "outputs_schema": {
+          "default": {
+            "type": "any",
+            "optional": "true",
+            "doc": "RDFS file with formalization of Classes and "
+          }
+        },
+        "desc": "RDFXML library of SWI-Prolog"
+      },
+      "is_resolved": false,
+      "step_id": "generate_rdfs_file",
+      "manifest_src": {
+        "module_type": "dummy",
+        "module_config": {
+          "title": "generate_rdfs_file",
+          "inputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Loaded RDF"
+            }
+          },
+          "outputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "RDFS file with formalization of Classes and "
+            }
+          },
+          "desc": "RDFXML library of SWI-Prolog"
+        },
+        "is_resolved": false
+      },
+      "input_links": {},
+      "module_details": {
+        "python_class_name": "Dummymodule",
+        "python_module_name": "kiara_plugin.streamlit.modules",
+        "full_name": "kiara_plugin.streamlit.modules.Dummymodule",
+        "module_config": {
+          "constants": {},
+          "defaults": {},
+          "inputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "Loaded RDF"
+            }
+          },
+          "outputs_schema": {
+            "default": {
+              "type": "any",
+              "optional": "true",
+              "doc": "RDFS file with formalization of Classes and "
+            }
+          },
+          "title": "generate_rdfs_file",
+          "desc": "RDFXML library of SWI-Prolog"
+        },
+        "inputs_schema": {
+          "default": {
+            "type": "any",
+            "type_config": {},
+            "default": "__not_set__",
+            "optional": true,
+            "is_constant": false,
+            "doc": {
+              "description": "Loaded RDF",
+              "doc": null
+            }
+          }
+        },
+        "outputs_schema": {
+          "default": {
+            "type": "any",
+            "type_config": {},
+            "default": "__not_set__",
+            "optional": true,
+            "is_constant": false,
+            "doc": {
+              "description": "RDFS file with formalization of Classes and",
+              "doc": null
+            }
+          }
+        }
+      },
+      "doc": {
+        "description": "-- n/a --",
+        "doc": null
+      }
+    }
+  ],
+  "input_aliases": {
+    "load_any_xml.default": "load_any_xml__default",
+    "convert_to_basic_with_rdf_xml.default": "convert_to_basic_with_rdf_xml__default",
+    "execute_rewrite_rules.default": "execute_rewrite_rules__default",
+    "generate_rdfs_file.default": "generate_rdfs_file__default"
+  },
+  "output_aliases": {
+    "load_any_xml.default": "load_any_xml__default",
+    "convert_to_basic_with_rdf_xml.default": "convert_to_basic_with_rdf_xml__default",
+    "execute_rewrite_rules.default": "execute_rewrite_rules__default",
+    "generate_rdfs_file.default": "generate_rdfs_file__default"
+  },
+  "doc": {
+    "description": "Convert XML to RDF",
+    "doc": "## Research Questions\nWhat kind of structured information can we identify and link"
+  },
+  "context": {
+    "authors": [
+      "v.de.boer@vu.nl"
+    ]
+  }
+}
