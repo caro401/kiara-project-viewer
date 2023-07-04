@@ -1,22 +1,32 @@
 ---
 import Layout from "../layouts/Layout.astro";
-const response = await fetch(
-  `${import.meta.env.KIARA_SERVICE_ENDPOINT}/pipelines/list`
-);
-const pipelines = await response.json();
+import {KiaraAPI} from "../lib/utils";
+
+const apiClient = new KiaraAPI(import.meta.env.KIARA_SERVICE_ENDPOINT).context('default')
+const pipeline_ids = await apiClient.list_pipeline_ids()
+
 ---
 
 <Layout title="Welcome to Astro.">
   <main class="prose prose-slate dark:prose-invert mx-auto">
-    <h1 class="py-8">Lumy Pipelines Explorer</h1>
+    <h1 class="py-8">Lumy Explorer</h1>
+    <h2>Example Workflows</h2>
+    <!--TODO actually only show the interesting extra_pipelines ones -->
     <ul class="">
       {
-        pipelines.map((p) => (
+        pipeline_ids.map((p) => (
           <li>
             <a href={`/${p}`}>{p.replaceAll("_", " ")}</a>
           </li>
+        <!--    TODO include list of step names, full workflow description-->
         ))
       }
     </ul>
+<h2>Plugin API Docs</h2>
+  <!--  list all the plugins -->
+  <!--   TODO list operations, filter by plugin,make datatype, module, operation page like mkdocs, also example pipelines? -->
+  <!--  some operations are pipelines -->
+  <!--   there are pipeline files in each repo at a known place? examples/pipeline and examples/data etc -->
+  <!--  use tabular plugin as an example? -->
   </main>
 </Layout>

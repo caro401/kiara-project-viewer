@@ -9,7 +9,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write src",
-    "lint": "astro check && eslint \"src/**/*.{js,astro,svelte}\""
+    "lint": "astro check && eslint \"src/**/*.{js,astro,svelte}\"",
+    "backend": "pixi run backend",
+    "sync-models": "pixi run export-models"
   },
   "dependencies": {
     "@astrojs/svelte": "^3.1.0",
@@ -25,6 +27,7 @@
     "eslint": "^8.43.0",
     "eslint-plugin-astro": "^0.27.2",
     "eslint-plugin-svelte": "^2.32.0",
+    "json-schema-to-typescript": "^13.0.2",
     "prettier": "^2.8.8",
     "prettier-plugin-astro": "^0.10.0",
     "prettier-plugin-svelte": "^2.10.1"

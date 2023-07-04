@@ -1,4 +1,5 @@
 <script>
+
   export let fields;
 
   const data = Object.entries(fields)
@@ -9,7 +10,6 @@
     // put non-optional things first
     .sort((a, b) => (a.optional !== b.optional ? (a.optional ? 1 : -1) : 0));
 </script>
-
 <table class="table-auto">
   <thead>
     <tr>

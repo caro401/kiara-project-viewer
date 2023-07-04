@@ -2,11 +2,12 @@
 
 ## Developing
 
-- Have nodejs (16.19 or newer) and npm installed.
+- Have nodejs (16.19 or newer), npm and [pixi](https://github.com/prefix-dev/pixi#installation) installed.
 - Create a `.env` file and set `KIARA_SERVICE_ENDPOINT` to the base url (including protocol) of a running kiara service (see `.env.example`)
 
 ```sh
 npm i  # install dependencies
+npm run backend  # start the kiara backens service
 npm run dev  # run the dev server
 
 npm run format # run the formatter (prettier)
@@ -14,10 +15,24 @@ npm run lint  # run the linter (eslint)
 
 npm run build  # build a static site to the dist directory
 npm run preview  # preview the static site you just built
+
+npm run sync-models  # update the type definitions for the kiara API
 ```
 
 This site has [TailwindCSS](https://tailwindcss.com/docs/) and the typography plugin installed. General styles go in `src/styles/global.css`, component styles go in components, either as classnames in HTML or `@apply` rules in a postcss style block.
 
 
 - [ ] TODO add typescript
-- [ ] TODO add python deps
+- [ ] TODO install and use headless UI
+- [ ] TODO grab useful components from https://github.com/makkus/lumy/blob/develop/src/lib/data/ValueInfoPanel.svelte etc
+- [ ] TODO plugin api docs
+- [ ] TODO think about pulling svelte components and typescript client thing into a package
+
+import some example datafiles like 
+```sh
+.pixi/env/bin/kiara run /home/markus/projects/kiara/kiara_plugin.tabular/examples/jobs/import_journal_tables.yaml --save journals
+
+.pixi/env/bin/kiara run /home/markus/projects/kiara/kiara_plugin.tabular/examples/jobs/import_journal_nodes_table.yaml --save import
+.pixi/env/bin/kiara data list
+
+```

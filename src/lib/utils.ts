@@ -118,6 +118,7 @@ export abstract class KiaraContext {
 
     public abstract get_pipeline_structure(pipeline: string): Promise<PipelineStructureInfo>;
 
+    public abstract list_pipeline_ids(): Promise<string[]>;
 }
 
 export class KiaraRestClientContext extends KiaraContext {
@@ -320,6 +321,15 @@ export class KiaraRestClientContext extends KiaraContext {
         return await this.check_status(response)
     }
 
+    public async list_pipeline_ids(): Promise<string[]> {
+
+        const url = pathJoin([this.url, "pipelines", "list"])
+        const response = await fetch(url, {
+            method: 'GET',
+        })
+        return await this.check_status(response)
+    }
+
     private async check_status(response: Response) {
         if ( response.status >=200 && response.status <=300 ) {
             return await response.json()
@@ -341,8 +351,8 @@ export class KiaraAPI {
     contexts: Record<string, KiaraContext>;
 
     constructor(backend_url: string = "http://localhost:8080") {
-        console.log("BACKEND")
-        console.log(backend_url)
+        // console.log("BACKEND")
+        // console.log(backend_url)
         this.default_url = backend_url;
         this.context_name = "default";
         this.contexts = {};
