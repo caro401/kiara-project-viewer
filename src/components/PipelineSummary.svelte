@@ -35,7 +35,7 @@
 <div class="px-4 py-6 sm:px-6 border-b border-slate-100 dark:border-slate-700">
   <a
     class="text-base font-semibold leading-7 text-slate-900 dark:text-slate-100"
-    href={`/${pipeline_id}`}>{pipeline_id}</a
+    href={`/pipelines/${pipeline_id}`}>{pipeline_id}</a
   >
   <Doc doc_object={pipeline.pipeline_config.doc} />
 </div>

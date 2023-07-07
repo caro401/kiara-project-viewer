@@ -14,6 +14,13 @@ const pipelines = await Promise.all(
     apiClient.get_pipeline_structure(p).then((res) => [p, res])
   )
 );
+
+const operations = await apiClient.list_operations();
+let packages = [
+  ...new Set(
+    Object.entries(operations).map(([_, v]) => v.context.labels.package)
+  ),
+].sort((a, b) => a.localeCompare(b));
 ---
 
 <Layout title="Welcome to Astro.">
@@ -26,22 +33,32 @@ const pipelines = await Promise.all(
     <ul class="not-prose pl-0 grid lg:grid-cols-2 gap-4">
       {
         pipelines.map(([p_id, data]) => (
-          <li>
+          <li class="card">
             <PipelineSummary pipeline_id={p_id} pipeline={data} />
           </li>
         ))
       }
     </ul>
     <h2>Plugin API Docs</h2>
+
     <!--  list all the plugins -->
     <!--  TODO list operations, filter by plugin,make datatype, module, operation page like mkdocs, also example pipelines? -->
     <!--  some operations are pipelines -->
     <!--  there are pipeline files in each repo at a known place? examples/pipeline and examples/data etc -->
     <!--  use tabular plugin as an example? -->
+    <ul class="mb-8 text-lg">
+      {
+        packages.map((p) => (
+          <li>
+            <a href={`/plugins/${p}`}>{p}</a>
+          </li>
+        ))
+      }
+    </ul>
   </main>
 </Layout>
 <style lang="postcss">
-  li {
+  .card {
     @apply bg-white dark:bg-slate-800 rounded-lg shadow list-none w-full;
   }
 </style>
