@@ -1,24 +1,36 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import apiClient from "@lib/kiara_api";
+import PipelineSummary from "@components/PipelineSummary.svelte";
 
-const pipeline_ids = await apiClient.list_pipeline_ids();
+let pipeline_ids = await apiClient.list_pipeline_ids();
+// TODO remove this filter when the extra pipelines work in kiara.service
+pipeline_ids = pipeline_ids.filter(
+  (p) => !["topic_modeling", "victors_super_nice_test_workflow"].includes(p)
+);
+
+const pipelines = await Promise.all(
+  pipeline_ids.map((p) =>
+    apiClient.get_pipeline_structure(p).then((res) => [p, res])
+  )
+);
 ---
 
 <Layout title="Welcome to Astro.">
-  <main class="prose prose-slate dark:prose-invert mx-auto">
-    <h1 class="py-8">Lumy Explorer</h1>
+  <main
+    class="prose prose-slate dark:prose-invert max-w-screen-xl w-full mx-auto px-4"
+  >
+    <h1 class="py-8 w-full text-center">Lumy Explorer</h1>
     <h2>Example Workflows</h2>
     <!--TODO actually only show the interesting extra_pipelines ones -->
-    <ul class="">
+    <ul class="not-prose pl-0 grid lg:grid-cols-2 gap-4">
       {
-        pipeline_ids.map((p) => (
+        pipelines.map(([p_id, data]) => (
           <li>
-            <a href={`/${p}`}>{p.replaceAll("_", " ")}</a>
+            <PipelineSummary pipeline_id={p_id} pipeline={data} />
           </li>
         ))
       }
-      <!--    TODO include list of step names, full workflow description-->
     </ul>
     <h2>Plugin API Docs</h2>
     <!--  list all the plugins -->
@@ -28,3 +40,8 @@ const pipeline_ids = await apiClient.list_pipeline_ids();
     <!--  use tabular plugin as an example? -->
   </main>
 </Layout>
+<style lang="postcss">
+  li {
+    @apply bg-white dark:bg-slate-800 rounded-lg shadow list-none w-full;
+  }
+</style>
