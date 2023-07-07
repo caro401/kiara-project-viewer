@@ -2,7 +2,7 @@
   import StepDetail from "./StepDetail.svelte";
   import Doc from "./Doc.svelte";
   import Inputs from "./Inputs.svelte";
-  import ValueMetadataPanel from "./ValueMetadataPanel.svelte";
+  import ValueMetadataPanel from "@components/data/ValueMetadataPanel.svelte";
 
   export let pipeline;
 </script>

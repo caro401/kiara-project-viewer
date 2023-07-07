@@ -1,8 +1,7 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Pipeline from "../components/Pipeline.svelte";
-import apiClient from '../lib/kiara_api'
-
+import Layout from "@layouts/Layout.astro";
+import Pipeline from "@components/Pipeline.svelte";
+import apiClient from "@lib/kiara_api";
 
 export async function getStaticPaths() {
   // see https://docs.astro.build/en/core-concepts/routing/#static-ssg-mode for how the routing works

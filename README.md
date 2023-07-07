@@ -22,17 +22,12 @@ npm run sync-models  # update the type definitions for the kiara API
 This site has [TailwindCSS](https://tailwindcss.com/docs/) and the typography plugin installed. General styles go in `src/styles/global.css`, component styles go in components, either as classnames in HTML or `@apply` rules in a postcss style block.
 
 
-- [ ] TODO add typescript
-- [ ] TODO install and use headless UI
-- [ ] TODO grab useful components from https://github.com/makkus/lumy/blob/develop/src/lib/data/ValueInfoPanel.svelte etc
 - [ ] TODO plugin api docs
 - [ ] TODO think about pulling svelte components and typescript client thing into a package
 
-import some example datafiles like 
+import some example datafiles like this, assuming you have `kiara_plugin.tabular` cloned somewhere on your system
 ```sh
 .pixi/env/bin/kiara run /home/markus/projects/kiara/kiara_plugin.tabular/examples/jobs/import_journal_tables.yaml --save journals
-
 .pixi/env/bin/kiara run /home/markus/projects/kiara/kiara_plugin.tabular/examples/jobs/import_journal_nodes_table.yaml --save import
 .pixi/env/bin/kiara data list
-
 ```

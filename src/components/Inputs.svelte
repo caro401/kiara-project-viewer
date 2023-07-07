@@ -32,21 +32,3 @@
     {/each}
   </tbody>
 </table>
-
-<style lang="postcss">
-  table {
-    @apply min-w-full divide-y divide-slate-300 dark:divide-slate-600 m-2 w-full;
-  }
-
-  th {
-    @apply py-3.5 pr-4 text-left text-sm font-semibold;
-  }
-
-  td {
-    @apply relative py-4  pr-4 text-sm;
-  }
-
-  tbody {
-    @apply divide-y divide-slate-200 dark:divide-slate-700;
-  }
-</style>

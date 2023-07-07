@@ -1,6 +1,6 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import apiClient from "../lib/kiara_api";
+import Layout from "@layouts/Layout.astro";
+import apiClient from "@lib/kiara_api";
 
 const pipeline_ids = await apiClient.list_pipeline_ids();
 ---
