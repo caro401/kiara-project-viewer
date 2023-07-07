@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FieldInfo } from "@lib/kiara_models";
 
-  export let fields: FieldInfo;
+  export let fields: { [k: string]: FieldInfo };
 
   const data = Object.entries(fields)
     // flatten object, include name
