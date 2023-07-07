@@ -1,10 +1,7 @@
 <script lang="ts">
   // import type {ValueInfo} from "../models.ts";
-  import { KiaraAPI } from "../lib/utils.ts";
 
-  const apiClient = new KiaraAPI(
-    import.meta.env.KIARA_SERVICE_ENDPOINT
-  ).context("default");
+  import apiClient from "../lib/kiara_api";
 
   export let value = null;
 
@@ -20,7 +17,7 @@
       value_id = value.value_id;
     }
     // this endpoint to help with pagination etc. comes from kiara_plugin.html
-    //         rendered = await apiClient.render_value_info(value_id)
+    //          rendered = await apiClient.render_value_info(value_id)
   }
 </script>
 
