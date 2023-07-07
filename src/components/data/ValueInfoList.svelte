@@ -1,12 +1,10 @@
 <script lang="ts">
   import SvelteTable from "svelte-table/src/SvelteTable.svelte";
   import { createEventDispatcher, onMount } from "svelte";
-
-  const dispatch = createEventDispatcher();
-
-  import type { ValueInfo } from "@lib/kiara_models.ts";
+  import type { ValueInfo } from "@lib/kiara_models";
   import { humanFileSize } from "@lib/utils";
   import apiClient from "@lib/kiara_api";
+  const dispatch = createEventDispatcher();
 
   // TODO: subscribe to store and new values
   export let columns_to_display = ["alias"];
@@ -51,7 +49,7 @@
     all_values_info = await apiClient.get_aliases_info();
     rows = Object.entries(all_values_info).map(function (entry) {
       let obj = { ...entry[1] };
-      obj.alias = entry[0];
+      obj.aliases = [entry[0]];
       return obj;
     });
     // handle_new_selected_alias(selected_alias)

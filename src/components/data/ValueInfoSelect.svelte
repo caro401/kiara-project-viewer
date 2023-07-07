@@ -10,7 +10,7 @@
 
   const dispatch = createEventDispatcher();
 
-  import type { ValueInfo, ValueMatcher } from "@lib/kiara_models.ts";
+  import type { ValueInfo, ValueMatcher } from "@lib/kiara_models";
   import { NOT_SET_VALUE_ID } from "@lib/utils";
   import apiClient from "@lib/kiara_api";
 
@@ -26,16 +26,16 @@
   let current_value = { alias: "-- no value --", value_id: NOT_SET_VALUE_ID };
   export let value_matcher: ValueMatcher = null;
   export let field_name = "field";
-
+  console.log(field_name);
   // $: update_rows(all_values_info)
 
   $: load_values(value_matcher);
   // $: load_values(field_name)
 
-  function update_rows(new_aliases_info) {
+  function update_rows(new_aliases_info: Record<string, ValueInfo>) {
     rows = Object.entries(new_aliases_info).map(function (entry) {
       let obj = { ...entry[1] };
-      obj.alias = entry[0];
+      obj.aliases = [entry[0]];
       return obj;
     });
   }
@@ -45,7 +45,7 @@
     update_rows(all_values_info);
     rows = Object.entries(all_values_info).map(function (entry) {
       let obj = { ...entry[1] };
-      obj.alias = entry[0];
+      obj.aliases = [entry[0]];
       return obj;
     });
     if (rows.length > 0) {
@@ -69,6 +69,7 @@
       dispatch("value_changed", null);
     } else {
       current_alias = new_alias;
+      // @ts-ignore
       current_value = all_values_info[current_alias];
       dispatch("alias_changed", current_alias);
       dispatch("value_changed", current_value);
@@ -89,39 +90,37 @@
   // }
 </script>
 
-<span>
-  <div class="value-select-listbox">
-    <Listbox bind:value={current_alias} on:change={handleSelect} let:open>
-      <ListboxButton class="button">
-        <span
-          >{#if current_alias == null}--no value --{:else}{current_alias}{/if}</span
-        >
-        <svg
-          width="20"
-          height="20"
-          class="arrows"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </ListboxButton>
-      <ListboxOptions class="options">
-        {#each rows as item (item)}
-          <ListboxOption value={item} class="option">
-            {item.alias}
-          </ListboxOption>
-        {/each}
-      </ListboxOptions>
-    </Listbox>
-  </div>
-</span>
+<div class="value-select-listbox">
+  <Listbox bind:value={current_alias} on:change={handleSelect} let:open>
+    <ListboxButton class="button">
+      <span
+        >{#if current_alias == null}--no value --{:else}{current_alias}{/if}</span
+      >
+      <svg
+        width="20"
+        height="20"
+        class="arrows"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </ListboxButton>
+    <ListboxOptions class="options">
+      {#each rows as item (item)}
+        <ListboxOption value={item} class="option">
+          {item.alias}
+        </ListboxOption>
+      {/each}
+    </ListboxOptions>
+  </Listbox>
+</div>
 
 <style>
   /*(badly) adapted from: https://joyofcode.xyz/svelte-headless-ui*/

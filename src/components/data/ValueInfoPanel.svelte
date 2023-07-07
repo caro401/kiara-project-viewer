@@ -8,9 +8,9 @@
   } from "@rgossiaux/svelte-headlessui";
   import RenderedValuePanel from "./RenderedValuePanel.svelte";
   import ValueViewControls from "./ValueViewControls.svelte";
-  import type { RenderValueResult, ValueInfo } from "@lib/kiara_models.ts";
+  import type { RenderValueResult, ValueInfo } from "@lib/kiara_models";
   import apiClient from "@lib/kiara_api";
-  import { InternalServiceError } from "@lib/utils.ts";
+  import { InternalServiceError } from "@lib/utils";
   import ValueMetadataPanel from "./ValueMetadataPanel.svelte";
   import ValueLineagePanel from "./ValueLineagePanel.svelte";
 
@@ -186,29 +186,12 @@
     padding: 0.2rem 1rem;
     border: none;
     cursor: pointer;
-    /*color: rgb(0 0 0);*/
   }
+
   .value-info-panel {
     height: 100%;
     display: flex;
     flex-direction: column;
-    /*background-color: yellowgreen;*/
-    /*align-content: stretch;*/
-    /*max-height: 100px;*/
-    /*overflow-y: hidden;*/
-  }
-
-  .preview-panel {
-    /*display: grid;*/
-    /*grid-template-rows: auto 1fr;*/
-    /*padding: 1em;*/
-    /*!*border: solid 1px;*!*/
-    /*gap: 1em;*/
-    /*height: 500px;*/
-    /*!*height: calc(100% - 20px);*!*/
-    /*!*width: calc(100% - 20px);*!*/
-
-    /*background-color: white;*/
   }
 
   .preview-control {

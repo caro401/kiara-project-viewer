@@ -7,7 +7,7 @@
 
   import ValueInput from "./ValueInput.svelte";
   import ValueInputScalar from "./ValueInputScalar.svelte";
-  import type { FieldInfo } from "@lib/kiara_models.ts";
+  import type { FieldInfo } from "@lib/kiara_models";
   import input_components from "./input_components";
 
   import { createEventDispatcher, onMount } from "svelte";
@@ -184,11 +184,6 @@
     cursor: pointer;
   }
 
-  .accordion-button-optional {
-    background-color: white;
-    padding: 1em;
-  }
-
   section {
     width: 100%;
     height: 100%;
@@ -207,17 +202,7 @@
   }
 
   .input-panel {
-    /*width: 100%;*/
     max-width: 80%;
     min-width: 30%;
-
-    /*height: 100%;*/
-    /*height: 500px;*/
-    /*min-width: 30%;*/
-  }
-
-  .input-panel-scalar {
-    max-width: 60%;
-    min-width: 20%;
   }
 </style>

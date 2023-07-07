@@ -3,7 +3,7 @@
 
   const dispatch = createEventDispatcher();
 
-  import type { FieldInfo } from "@lib/kiara_models.ts";
+  import type { FieldInfo } from "@lib/kiara_models";
 
   export let current_value = "";
   $: update_value(current_value);

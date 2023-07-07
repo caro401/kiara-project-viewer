@@ -5,7 +5,7 @@
   const dispatch = createEventDispatcher();
 
   import ValueInputsPanel from "../inputs/ValueInputsPanel.svelte";
-  import type { OperationInfo, FieldInfo } from "@lib/kiara_models.ts";
+  import type { OperationInfo, FieldInfo } from "@lib/kiara_models";
   import apiClient from "@lib/kiara_api";
 
   export let display_operation_select = false;

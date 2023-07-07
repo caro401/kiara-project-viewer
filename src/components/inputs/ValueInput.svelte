@@ -5,7 +5,7 @@
 
   import ValueInfoPanel from "@components/data/ValueInfoPanel.svelte";
   import ValueInfoSelect from "@components/data/ValueInfoSelect.svelte";
-  import type { FieldInfo, ValueInfo } from "@lib/kiara_models.ts";
+  import type { FieldInfo, ValueInfo } from "@lib/kiara_models";
 
   export let field_info: FieldInfo;
 

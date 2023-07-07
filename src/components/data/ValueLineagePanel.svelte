@@ -1,8 +1,8 @@
 <script lang="ts">
+  // @ts-ignore
   import Svelvet from "svelvet";
   import ELK, { ElkNode } from "elkjs/lib/elk.bundled.js";
-
-  import type { ValueInfo } from "@lib/kiara_models.ts";
+  import type { ValueInfo } from "@lib/kiara_models";
   import apiClient from "@lib/kiara_api";
   export let value: ValueInfo | string = null;
 
@@ -71,6 +71,7 @@
     // const layout_name = "org.eclipse.elk.layered"
     const layout_name = "org.eclipse.elk.mrtree";
 
+    // @ts-ignore
     const graph: ElkNode = {
       id: "lineage",
       layoutOptions: {
@@ -84,6 +85,7 @@
 
     const elk = new ELK();
     const layout = await elk.layout(graph);
+    // @ts-ignore
     svelvet_nodes = layout.children.map((node) => {
       node["position"] = {
         x: node.x,
@@ -91,6 +93,7 @@
       };
       return node;
     });
+    // @ts-ignore
     svelvet_edges = layout.edges;
     console.log("LAYOUT", layout);
     // svelvet_edges = []
@@ -100,7 +103,7 @@
 <div class="value-lineage-panel">
   {#if svelvet_nodes != null && svelvet_edges != null}
     <!--    <Svelvet nodes={initialEdges} edges={initialNodes} background/>-->
-    <Svelvet nodes={svelvet_nodes} edges={svelvet_edges} background />
+    <!--    <Svelvet nodes={svelvet_nodes} edges={svelvet_edges} background />-->
   {:else}
     No value selected
   {/if}

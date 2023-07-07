@@ -3,15 +3,16 @@
   const dispatch = createEventDispatcher();
 
   import ValueInputsPanel from "../inputs/ValueInputsPanel.svelte";
-  import type { OperationInfo, FieldInfo } from "@lib/kiara_models.ts";
-
-  import { kiara_api } from "../stores.ts";
+  import type { OperationInfo, FieldInfo } from "@lib/kiara_models";
+  import OperationSelect from "@components/operations/OperationSelect.svelte";
+  import apiClient from "@lib/kiara_api";
 
   export let display_operation_select = false;
-  export let workflow_id: string;
-  export let workflow_stage: number;
+  // export let workflow_id: string;
+  // export let workflow_stage: number;
 
   let workflow = null;
+  let fields_info, operation, operation_id;
 
   async function set_workflow_stage(_workflow_id, _workflow_stage) {
     if (_workflow_id == null) {
@@ -19,7 +20,7 @@
       return;
     }
 
-    operation = await $kiara_api.context().get_operation(operation_id);
+    operation = await apiClient.get_operation(operation_id);
     fields_info = operation.input_fields;
   }
 
@@ -48,17 +49,3 @@
     />
   </div>
 </section>
-
-<style>
-  /*section {*/
-  /*    display: grid;*/
-  /*    padding: 8px;*/
-  /*    grid-template-columns: 100%;*/
-  /*    grid-template-rows: auto 1fr;*/
-  /*    gap: 1rem;*/
-  /*}*/
-
-  /*.item {*/
-  /*    height: 100%;*/
-  /*}*/
-</style>

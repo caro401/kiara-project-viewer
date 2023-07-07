@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ValueInfo } from "@lib/kiara_models.ts";
+  import type { ValueInfo } from "@lib/kiara_models";
   import apiClient from "@lib/kiara_api";
 
   export let value: ValueInfo | string = null;

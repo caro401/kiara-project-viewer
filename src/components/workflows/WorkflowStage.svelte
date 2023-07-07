@@ -1,29 +1,21 @@
 <script lang="ts">
-  import JSONTree from "svelte-json-tree";
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
 
-  import { kiara_api } from "../stores.ts";
-  import type {
-    FieldInfo,
-    PipelineStage,
-    PipelineStructureInfo,
-    Value,
-    ValueSchema,
-  } from "@lib/kiara_models.ts";
-  import ValueInputsPanel from "$lib/inputs/ValueInputsPanel.svelte";
+  import type { FieldInfo, PipelineStructureInfo } from "@lib/kiara_models";
+  import ValueInputsPanel from "@components/inputs/ValueInputsPanel.svelte";
 
   export let pipeline_structure: PipelineStructureInfo;
   export let pipeline_stage_idx: number;
 
-  let stage_info: PipelineStage;
+  let stage_info;
   let stage_inputs: Record<string, FieldInfo> = {};
   let stage_outputs: Record<string, FieldInfo> = {};
   $: set_stage(pipeline_structure, pipeline_stage_idx);
 
   function set_stage(structure, stage_idx: number) {
-    stage_info = pipeline_structure.processing_stages_info[pipeline_stage_idx];
+    stage_info = pipeline_structure.processing_stages[pipeline_stage_idx];
     stage_inputs = Object.fromEntries(
       stage_info.pipeline_inputs.map((field_name) => [
         field_name,

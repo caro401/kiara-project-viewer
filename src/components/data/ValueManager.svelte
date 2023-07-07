@@ -6,7 +6,7 @@
 
   const dispatch = createEventDispatcher();
 
-  import type { ValueInfo } from "@lib/kiara_models.ts";
+  import type { ValueInfo } from "@lib/kiara_models";
 
   let current_value: ValueInfo = null;
 

@@ -1,6 +1,6 @@
 <script lang="ts">
   import SvelteMarkdown from "svelte-markdown";
-  import type { OperationInfo } from "@lib/kiara_models.ts";
+  import type { OperationInfo } from "@lib/kiara_models";
   import apiClient from "@lib/kiara_api";
 
   export let operation_id = null;
