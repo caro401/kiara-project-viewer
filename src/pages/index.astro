@@ -1,10 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import {KiaraAPI} from "../lib/utils";
+import { KiaraAPI } from "../lib/utils";
 
-const apiClient = new KiaraAPI(import.meta.env.KIARA_SERVICE_ENDPOINT).context('default')
-const pipeline_ids = await apiClient.list_pipeline_ids()
-
+const apiClient = new KiaraAPI(import.meta.env.KIARA_SERVICE_ENDPOINT).context(
+  "default"
+);
+const pipeline_ids = await apiClient.list_pipeline_ids();
 ---
 
 <Layout title="Welcome to Astro.">
@@ -18,15 +19,15 @@ const pipeline_ids = await apiClient.list_pipeline_ids()
           <li>
             <a href={`/${p}`}>{p.replaceAll("_", " ")}</a>
           </li>
-        <!--    TODO include list of step names, full workflow description-->
         ))
       }
+      <!--    TODO include list of step names, full workflow description-->
     </ul>
-<h2>Plugin API Docs</h2>
-  <!--  list all the plugins -->
-  <!--   TODO list operations, filter by plugin,make datatype, module, operation page like mkdocs, also example pipelines? -->
-  <!--  some operations are pipelines -->
-  <!--   there are pipeline files in each repo at a known place? examples/pipeline and examples/data etc -->
-  <!--  use tabular plugin as an example? -->
+    <h2>Plugin API Docs</h2>
+    <!--  list all the plugins -->
+    <!--  TODO list operations, filter by plugin,make datatype, module, operation page like mkdocs, also example pipelines? -->
+    <!--  some operations are pipelines -->
+    <!--  there are pipeline files in each repo at a known place? examples/pipeline and examples/data etc -->
+    <!--  use tabular plugin as an example? -->
   </main>
 </Layout>

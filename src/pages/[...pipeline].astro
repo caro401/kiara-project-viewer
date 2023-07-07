@@ -1,16 +1,19 @@
 ---
-import {KiaraAPI} from "../lib/utils";
+import { KiaraAPI } from "../lib/utils";
 import Layout from "../layouts/Layout.astro";
 import Pipeline from "../components/Pipeline.svelte";
 
 // TODO find a way to construct this once and import nanostores!
-const apiClient = new KiaraAPI(import.meta.env.KIARA_SERVICE_ENDPOINT).context('default')
-
+const apiClient = new KiaraAPI(import.meta.env.KIARA_SERVICE_ENDPOINT).context(
+  "default"
+);
 
 export async function getStaticPaths() {
   // see https://docs.astro.build/en/core-concepts/routing/#static-ssg-mode for how the routing works
-  const apiClient = new KiaraAPI(import.meta.env.KIARA_SERVICE_ENDPOINT).context('default')
-  const pipeline_ids = await apiClient.list_pipeline_ids()
+  const apiClient = new KiaraAPI(
+    import.meta.env.KIARA_SERVICE_ENDPOINT
+  ).context("default");
+  const pipeline_ids = await apiClient.list_pipeline_ids();
 
   return pipeline_ids.map((p) => {
     return { params: { pipeline: p } };
@@ -18,10 +21,10 @@ export async function getStaticPaths() {
 }
 
 const { pipeline } = Astro.params;
-const data = await apiClient.get_pipeline_structure(pipeline)
+const data = await apiClient.get_pipeline_structure(pipeline);
 ---
 
 <Layout title={pipeline}>
   <a class="m-4" href="/">&larr;back to pipelines list</a>
-  <Pipeline pipeline={data}  client:load />
+  <Pipeline pipeline={data} client:load />
 </Layout>
