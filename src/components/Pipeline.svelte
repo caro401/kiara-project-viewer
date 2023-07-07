@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import StepDetail from "./StepDetail.svelte";
   import Doc from "./Doc.svelte";
   import Inputs from "./Inputs.svelte";

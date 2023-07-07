@@ -1,7 +1,6 @@
-<script>
-
-    // import type {ValueInfo} from "../models.ts";
-import {KiaraAPI} from "../lib/utils.ts";
+<script lang="ts">
+  // import type {ValueInfo} from "../models.ts";
+  import { KiaraAPI } from "../lib/utils.ts";
 
     const apiClient = new KiaraAPI(import.meta.env.KIARA_SERVICE_ENDPOINT).context('default')
 

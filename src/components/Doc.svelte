@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   export let doc_object;
   import { marked } from "marked";
   marked.use({

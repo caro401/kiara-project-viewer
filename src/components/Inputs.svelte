@@ -1,5 +1,4 @@
-<script>
-
+<script lang="ts">
   export let fields;
 
   const data = Object.entries(fields)

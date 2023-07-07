@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Doc from "./Doc.svelte";
 
   export let step_id; // unique identifier in the pipeline for this step
