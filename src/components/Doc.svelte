@@ -11,5 +11,5 @@
 
 <p>{doc_object.description}</p>
 {#if doc_object.doc}
-  <p>{@html sanitizeHtml(marked.parse(doc_object.doc))}</p>
+  {@html sanitizeHtml(marked.parse(doc_object.doc))}
 {/if}
