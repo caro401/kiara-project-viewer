@@ -1,0 +1,44 @@
+---
+import Layout from "@layouts/Layout.astro";
+import apiClient from "@lib/kiara_api";
+
+export async function getStaticPaths() {
+  const operations = await apiClient.list_operations();
+  let packages = [
+    ...new Set(
+      Object.entries(operations).map(([_, v]) => v.context.labels.package)
+    ),
+  ];
+  return packages.map((p) => {
+    return { params: { plugin: p } };
+  });
+}
+
+const { plugin } = Astro.params;
+
+const operations = Object.entries(
+  await apiClient.list_operations([], true)
+).filter(([_, v]) => {
+  return v.context.labels.package == plugin;
+});
+---
+
+<Layout title={plugin}>
+  <main
+    class="prose prose-slate dark:prose-invert max-w-screen-xl w-full mx-auto px-4"
+  >
+    <a class="m-4" href="/">&larr; home</a>
+    <h1>{plugin}</h1>
+    <h2>Operations</h2>
+    <ul>
+      {
+        operations.map(([k, v]) => (
+          <li>
+            <a href={`/plugins/${plugin}/operations/${k}`}>{k}</a>:{" "}
+            {v.documentation.description}{" "}
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Layout>

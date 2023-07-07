@@ -1,0 +1,35 @@
+---
+import Layout from "@layouts/Layout.astro";
+import apiClient from "@lib/kiara_api";
+import Doc from "@components/Doc.svelte";
+import Inputs from "@components/Inputs.svelte";
+
+export async function getStaticPaths() {
+  const operations = await apiClient.list_operations([], true);
+
+  return Object.entries(operations).map(([k, v]) => {
+    return { params: { operation: k, plugin: v.context.labels.package } };
+  });
+}
+
+const { operation, plugin } = Astro.params;
+const data = await apiClient.get_operation(operation);
+---
+
+<Layout title={operation}>
+  <main
+    class="prose prose-slate dark:prose-invert max-w-screen-xl w-full mx-auto px-4"
+  >
+    <nav>
+      <a class="m-4" href="/">&larr; Home</a>
+      <a href={`/plugins/${plugin}`}>Back to plugin</a>
+    </nav>
+    <h1>{operation}</h1>
+    <p>From <a href={`/plugins/${plugin}`}>{plugin}</a></p>
+    <Doc doc_object={data.documentation} />
+    <h2>Inputs</h2>
+    <Inputs fields={data.input_fields} />
+    <h2>Outputs</h2>
+    <Inputs fields={data.output_fields} />
+  </main>
+</Layout>
