@@ -5,6 +5,7 @@ import PipelineSummary from "@components/PipelineSummary.svelte";
 
 let pipeline_ids = await apiClient.list_pipeline_ids();
 // TODO remove this filter when the extra pipelines work in kiara.service
+// actually we only want to show these interesting extra ones, or the ones from plugins?
 pipeline_ids = pipeline_ids.filter(
   (p) => !["topic_modeling", "victors_super_nice_test_workflow"].includes(p)
 );
@@ -15,21 +16,17 @@ const pipelines = await Promise.all(
   )
 );
 
-const operations = await apiClient.list_operations();
-let packages = [
-  ...new Set(
-    Object.entries(operations).map(([_, v]) => v.context.labels.package)
-  ),
-].sort((a, b) => a.localeCompare(b));
+const installed_plugins = await apiClient.list_installed_plugins();
+let plugins = Object.keys(installed_plugins).sort((a, b) => a.localeCompare(b)).map((p) => p.replaceAll('-','_'));
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Lumy">
   <main
     class="prose prose-slate dark:prose-invert max-w-screen-xl w-full mx-auto px-4"
   >
     <h1 class="py-8 w-full text-center">Lumy Explorer</h1>
     <h2>Example Workflows</h2>
-    <!--TODO actually only show the interesting extra_pipelines ones -->
+
     <ul class="not-prose pl-0 grid lg:grid-cols-2 gap-4">
       {
         pipelines.map(([p_id, data]) => (
@@ -39,16 +36,15 @@ let packages = [
         ))
       }
     </ul>
-    <h2>Plugin API Docs</h2>
-
-    <!--  list all the plugins -->
-    <!--  TODO list operations, filter by plugin,make datatype, module, operation page like mkdocs, also example pipelines? -->
-    <!--  some operations are pipelines -->
-    <!--  there are pipeline files in each repo at a known place? examples/pipeline and examples/data etc -->
-    <!--  use tabular plugin as an example? -->
+    <h2>Documentation</h2>
+    <!--  TODO link here to all operations/datatypes?-->
+      <h3>By package</h3>
     <ul class="mb-8 text-lg">
+                <li>
+            <a href={`/plugins/kiara`}>kiara base package</a>
+          </li>
       {
-        packages.map((p) => (
+        plugins.map((p) => (
           <li>
             <a href={`/plugins/${p}`}>{p}</a>
           </li>

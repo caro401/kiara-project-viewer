@@ -114,7 +114,8 @@ export abstract class KiaraContext {
 
   public abstract list_operations(
     filters?: string[],
-    include_internal?: boolean
+    include_internal?: boolean,
+    python_package?: string,
   ): Promise<Record<string, OperationInfo>>;
 
   public abstract list_operation_ids(
@@ -150,6 +151,8 @@ export abstract class KiaraContext {
   ): Promise<PipelineStructureInfo>;
 
   public abstract list_pipeline_ids(): Promise<string[]>;
+    public abstract list_installed_plugins(): Promise<string[]>;
+
 }
 
 export class KiaraRestClientContext extends KiaraContext {
@@ -305,20 +308,21 @@ export class KiaraRestClientContext extends KiaraContext {
     return await this.check_status(response);
   }
 
-  public async list_operations(filters?: string[], include_internal?: boolean) {
+  public async list_operations(filters?: string[], include_internal?: boolean, python_package?: string ) {
     if (filters == null) {
       filters = [];
     }
     if (include_internal == null) {
       include_internal = false;
     }
-
+// todo handle if python_package not set
     const url = pathJoin([this.url, "operations"]);
     const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify({
         filters: filters,
         include_internal: include_internal,
+        python_package
       }),
     });
     return await this.check_status(response);
@@ -397,14 +401,19 @@ export class KiaraRestClientContext extends KiaraContext {
     });
     return await this.check_status(response);
   }
-
+  public async list_installed_plugins(): Promise<string[]> {
+    const url = pathJoin([this.url, "context", "installed_plugins"]);
+    const response = await fetch(url, {
+      method: "GET",
+    });
+    return await this.check_status(response);
+  }
   private async check_status(response: Response) {
     if (response.status >= 200 && response.status <= 300) {
       return await response.json();
     } else {
       const error_model = await response.json();
-      const error = new InternalServiceError(error_model.detail);
-      throw error;
+      throw new InternalServiceError(error_model.detail);
     }
   }
 }

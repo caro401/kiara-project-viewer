@@ -3,24 +3,37 @@ import Layout from "@layouts/Layout.astro";
 import apiClient from "@lib/kiara_api";
 
 export async function getStaticPaths() {
-  const operations = await apiClient.list_operations();
-  let packages = [
-    ...new Set(
-      Object.entries(operations).map(([_, v]) => v.context.labels.package)
-    ),
-  ];
-  return packages.map((p) => {
-    return { params: { plugin: p } };
-  });
+  const plugins_data = await apiClient.list_installed_plugins();
+
+  return [{params: {plugin: 'kiara'}}, ...Object.entries(plugins_data).map(([name,version]) => {
+    return { params: { plugin: name.replaceAll('-','_') } };
+  })];
 }
 
 const { plugin } = Astro.params;
 
 const operations = Object.entries(
-  await apiClient.list_operations([], true)
-).filter(([_, v]) => {
-  return v.context.labels.package == plugin;
-});
+  await apiClient.list_operations([], false, plugin) // todo use the package arg not this filter thing
+)
+// for users everything is an operation, with a hopefully descriptive name.
+// python-wise it is a module with specific configuration
+// module is the atomic unit, a python class with input and output schema which are more general. They have little configuration
+// if a module has all default values for its config, there's also an operation with the same module name/operation ID
+// you can use an operation id OR a module id plus config in a pipeline.
+// operation IDs should cover most of what general users need, modules are for more advanced/niche usecases
+
+// a pipeline is a special operation, an instatiation of a Pipeline module, where the module config is the pipeline config i've already seen
+
+// TODO do we want to show this to a user? maybe in a separate section?
+// get modules with `kiara module list` -> GET /modules/
+// data about modules with `kiara module explain <moduleID>` -> POST? /modules/name
+// hide this and the pydantic backing classes
+
+
+// get data_types with `kiara data_type list` -> this isn't done in openapi yet
+
+// TODO SEARCH -> titles, tags on operations, labels we need to help people with discoverability!
+// TODO also display/sort operation tags
 ---
 
 <Layout title={plugin}>
@@ -29,13 +42,14 @@ const operations = Object.entries(
   >
     <a class="m-4" href="/">&larr; home</a>
     <h1>{plugin}</h1>
+    <!--TODO do plugins have any kind of summary info?-->
     <h2>Operations</h2>
     <ul>
       {
         operations.map(([k, v]) => (
           <li>
             <a href={`/plugins/${plugin}/operations/${k}`}>{k}</a>:{" "}
-            {v.documentation.description}{" "}
+            {v.documentation.description}
           </li>
         ))
       }
