@@ -5,11 +5,7 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type JobStatus =
-  | "__job_created__"
-  | "__job_started__"
-  | "__job_success__"
-  | "__job_failed__";
+export type JobStatus = "__job_created__" | "__job_started__" | "__job_success__" | "__job_failed__";
 export type ValueStatus = "unknown" | "not set" | "none" | "default" | "set";
 /**
  * Enum to describe the state of a workflow.
@@ -415,12 +411,7 @@ export interface SerializationResult {
    * One or several byte arrays representing the serialized state of the value.
    */
   data: {
-    [k: string]:
-      | SerializedBytes
-      | SerializedListOfBytes
-      | SerializedFile
-      | SerializedFiles
-      | SerializedInlineJson;
+    [k: string]: SerializedBytes | SerializedListOfBytes | SerializedFile | SerializedFiles | SerializedInlineJson;
   };
 }
 export interface SerializedBytes {
