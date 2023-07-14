@@ -22,8 +22,8 @@ npm run sync-models  # update the type definitions for the kiara API
 This site has [TailwindCSS](https://tailwindcss.com/docs/) and the typography plugin installed. General styles go in `src/styles/global.css`, component styles go in components, either as classnames in HTML or `@apply` rules in a postcss style block.
 
 
-- [ ] TODO plugin api docs
 - [ ] TODO think about pulling svelte components and typescript client thing into a package
+- [ ] TODO markdown parser handle [][] format links to other bits of python, like https://github.com/zslabs/remark-relative-links/blob/master/index.js
 
 import some example datafiles like this, assuming you have `kiara_plugin.tabular` cloned somewhere on your system
 ```sh

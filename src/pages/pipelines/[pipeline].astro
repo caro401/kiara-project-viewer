@@ -4,7 +4,6 @@ import Pipeline from "@components/Pipeline.svelte";
 import apiClient from "@lib/kiara_api";
 
 export async function getStaticPaths() {
-  // see https://docs.astro.build/en/core-concepts/routing/#static-ssg-mode for how the routing works
   let pipeline_ids = await apiClient.list_pipeline_ids();
   // TODO remove this filter when the extra pipelines work in kiara.service
   pipeline_ids = pipeline_ids.filter(

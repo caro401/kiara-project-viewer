@@ -10,3 +10,6 @@ ValueMatcher
 ValueSchema
 WorkflowInfo
 DataTypeInfo
+OperationMatcher
+ModuleMatcher
+DataTypeMatcher

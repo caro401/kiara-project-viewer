@@ -17,7 +17,9 @@ const pipelines = await Promise.all(
 );
 
 const installed_plugins = await apiClient.list_installed_plugins();
-let plugins = Object.keys(installed_plugins).sort((a, b) => a.localeCompare(b)).map((p) => p.replaceAll('-','_'));
+let plugins = Object.keys(installed_plugins)
+  .sort((a, b) => a.localeCompare(b))
+  .map((p) => p.replaceAll("-", "_"));
 ---
 
 <Layout title="Lumy">
@@ -38,11 +40,11 @@ let plugins = Object.keys(installed_plugins).sort((a, b) => a.localeCompare(b)).
     </ul>
     <h2>Documentation</h2>
     <!--  TODO link here to all operations/datatypes?-->
-      <h3>By package</h3>
+    <h3>By package</h3>
     <ul class="mb-8 text-lg">
-                <li>
-            <a href={`/plugins/kiara`}>kiara base package</a>
-          </li>
+      <li>
+        <a href={`/plugins/kiara`}>kiara base package</a>
+      </li>
       {
         plugins.map((p) => (
           <li>
@@ -53,8 +55,3 @@ let plugins = Object.keys(installed_plugins).sort((a, b) => a.localeCompare(b)).
     </ul>
   </main>
 </Layout>
-<style lang="postcss">
-  .card {
-    @apply bg-white dark:bg-slate-800 rounded-lg shadow list-none w-full;
-  }
-</style>

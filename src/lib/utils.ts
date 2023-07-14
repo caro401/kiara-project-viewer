@@ -112,11 +112,13 @@ export abstract class KiaraContext {
     data_types: string[]
   ): Promise<Record<string, string[]>>;
 
-  public abstract list_operations(
-    filters?: string[],
-    include_internal?: boolean,
-    python_package?: string,
-  ): Promise<Record<string, OperationInfo>>;
+  public abstract list_operations(options: {
+    filters?: string[];
+    include_internal?: boolean;
+    python_package?: string;
+    input_types?: string[];
+    output_types?: string[];
+  }): Promise<Record<string, OperationInfo>>;
 
   public abstract list_operation_ids(
     filters?: string[],
@@ -151,8 +153,12 @@ export abstract class KiaraContext {
   ): Promise<PipelineStructureInfo>;
 
   public abstract list_pipeline_ids(): Promise<string[]>;
-    public abstract list_installed_plugins(): Promise<string[]>;
-
+  public abstract list_installed_plugins(): Promise<string[]>;
+  public abstract list_data_types(
+    filters?: string[],
+    python_package?: string
+  ): Promise<string[]>;
+  public abstract get_data_type(data_type_id: string): Promise<OperationInfo>;
 }
 
 export class KiaraRestClientContext extends KiaraContext {
@@ -285,7 +291,11 @@ export class KiaraRestClientContext extends KiaraContext {
     const response = await fetch(url, { method: "GET" });
     return await this.check_status(response);
   }
-
+  public async get_data_type(data_type_id: string): Promise<OperationInfo> {
+    const url = pathJoin([this.url, "data-types", data_type_id]);
+    const response = await fetch(url, { method: "GET" });
+    return await this.check_status(response);
+  }
   public async list_operation_ids(
     filters?: string[],
     include_internal?: boolean
@@ -308,21 +318,18 @@ export class KiaraRestClientContext extends KiaraContext {
     return await this.check_status(response);
   }
 
-  public async list_operations(filters?: string[], include_internal?: boolean, python_package?: string ) {
-    if (filters == null) {
-      filters = [];
-    }
-    if (include_internal == null) {
-      include_internal = false;
-    }
-// todo handle if python_package not set
+  public async list_operations(options: {
+    filters?: string[];
+    include_internal?: boolean;
+    python_package?: string;
+    input_types?: string[];
+    output_types?: string[];
+  }) {
     const url = pathJoin([this.url, "operations"]);
     const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify({
-        filters: filters,
-        include_internal: include_internal,
-        python_package
+        ...options,
       }),
     });
     return await this.check_status(response);
@@ -405,6 +412,18 @@ export class KiaraRestClientContext extends KiaraContext {
     const url = pathJoin([this.url, "context", "installed_plugins"]);
     const response = await fetch(url, {
       method: "GET",
+    });
+    return await this.check_status(response);
+  }
+
+  public async list_data_types(filters?: string[], python_package?: string) {
+    const url = pathJoin([this.url, "data-types"]);
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        filters: filters || [],
+        python_package,
+      }),
     });
     return await this.check_status(response);
   }
