@@ -1,0 +1,54 @@
+---
+import Layout from "@layouts/Layout.astro";
+import apiClient from "@lib/kiara_api";
+import Doc from "@components/Doc.svelte";
+import ModuleConfig from "@components/ModuleConfig.svelte";
+import { Code } from "astro/components";
+
+export async function getStaticPaths() {
+  const modules = await apiClient.list_modules({});
+
+  return Object.entries(modules).map(([k, v]) => {
+    return { params: { module: k, plugin: v.context.labels.package } };
+  });
+}
+
+const { module, plugin } = Astro.params;
+const data = await apiClient.get_module(module);
+
+const all_data_types = await apiClient.list_data_types();
+---
+
+<Layout title={module}>
+  <dl
+    class="mt-4 rounded-md w-fit bg-slate-100 dark:bg-slate-800 px-4 py-3 text-sm leading-6 grid gap-y-3 gap-x-4 grid-cols-[max-content_1fr]"
+  >
+    <dt class="font-bold">Author(s)</dt>
+    <dd>
+      {data.authors.authors.map((a) => `${a.name} (${a.email})`).join(", ")}
+    </dd>
+    <dt class="font-bold">From package</dt>
+    <dd><a href={`/plugins/${plugin}`}>{plugin}</a></dd>
+    <dt class="font-bold">Tags</dt>
+    <dd>{data.context.tags.join(", ")}</dd>
+    <dt class="font-bold">Python class</dt>
+    <dd>
+      <code>{data.python_class.full_name}</code>
+    </dd>
+  </dl>
+  <Doc doc_object={data.documentation} />
+  <h2>Configuration</h2>
+  <code>{data.config.python_class.full_name}</code>
+  <ModuleConfig
+    config_values={data.config.config_values}
+    {all_data_types}
+    plugin={plugin}
+  />
+  <!--<h2>Inputs</h2>-->
+  <!--<Inputs fields={data.input_fields} {all_data_types} />-->
+  <!--<h2>Outputs</h2>-->
+  <!--<Inputs fields={data.output_fields} {all_data_types} />-->
+  <h2>Module source code</h2>
+  <!--TODO syntax highlight python-->
+  <Code lang="python" code={data.module_src} wrap theme="dracula" />
+</Layout>

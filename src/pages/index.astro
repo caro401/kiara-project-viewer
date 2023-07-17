@@ -1,7 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import apiClient from "@lib/kiara_api";
-import PipelineSummary from "@components/PipelineSummary.svelte";
 
 let pipeline_ids = await apiClient.list_pipeline_ids();
 // TODO remove this filter when the extra pipelines work in kiara.service
@@ -22,36 +21,32 @@ let plugins = Object.keys(installed_plugins)
   .map((p) => p.replaceAll("-", "_"));
 ---
 
-<Layout title="Lumy">
-  <main
-    class="prose prose-slate dark:prose-invert max-w-screen-xl w-full mx-auto px-4"
-  >
-    <h1 class="py-8 w-full text-center">Lumy Explorer</h1>
-    <h2>Example Workflows</h2>
-
-    <ul class="not-prose pl-0 grid lg:grid-cols-2 gap-4">
-      {
-        pipelines.map(([p_id, data]) => (
-          <li class="card">
-            <PipelineSummary pipeline_id={p_id} pipeline={data} />
-          </li>
-        ))
-      }
-    </ul>
-    <h2>Documentation</h2>
-    <!--  TODO link here to all operations/datatypes?-->
-    <h3>By package</h3>
-    <ul class="mb-8 text-lg">
-      <li>
-        <a href={`/plugins/kiara`}>kiara base package</a>
-      </li>
-      {
-        plugins.map((p) => (
-          <li>
-            <a href={`/plugins/${p}`}>{p}</a>
-          </li>
-        ))
-      }
-    </ul>
-  </main>
+<Layout title="Lumy" displayTitle={false}>
+  <div class="py-24 sm:py-32 lg:pb-40">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h1
+          class="text-4xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-6xl"
+        >
+          Lumy: tagline goes here
+        </h1>
+        <p class="mt-6 text-lg leading-8 text-slate-800 dark:text-slate-300">
+          Something about what lumi/kiara lets you do with your data and
+          workflows and stuff goes here, but I can't write good words.
+        </p>
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+          <a
+            href="/pipelines"
+            class="rounded-md no-underline bg-sky-500 px-3.5 py-2.5 text-sm font-semibold text-white hover:text-white shadow-sm hover:bg-sky-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+            >Browse example workflows</a
+          >
+          <a
+            href="/plugins"
+            class="text-sm font-semibold leading-6 no-underline text-slate-900 dark:text-white"
+            >Get started <span aria-hidden="true">→</span></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
 </Layout>

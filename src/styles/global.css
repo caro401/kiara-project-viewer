@@ -41,7 +41,7 @@
   }
 
   td {
-    @apply relative py-4  pr-4 text-sm;
+    @apply py-4  pr-4 text-sm;
   }
 
   tbody {

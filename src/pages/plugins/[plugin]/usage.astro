@@ -1,0 +1,57 @@
+---
+import Layout from "@layouts/Layout.astro";
+import apiClient from "@lib/kiara_api";
+import PluginGithubLink from "@components/PluginGithubLink.svelte";
+
+export async function getStaticPaths() {
+  const plugins_data = await apiClient.list_installed_plugins();
+
+  return [
+    { params: { plugin: "kiara" } },
+    ...Object.entries(plugins_data).map(([name, _]) => {
+      return { params: { plugin: name.replaceAll("-", "_") } };
+    }),
+  ];
+}
+
+const { plugin } = Astro.params;
+
+const operations = Object.entries(
+  await apiClient.list_operations({ python_package: plugin })
+);
+
+const data_types = Object.entries(await apiClient.list_data_types([], plugin));
+---
+
+<Layout title={`${plugin} usage`}>
+  <h2>Operations</h2>
+  {
+    operations.length > 0 ? (
+      <ul>
+        {operations.map(([k, v]) => (
+          <li>
+            <a href={`/plugins/${plugin}/operations/${k}`}>{k}</a>:{" "}
+            {v.documentation.description}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>This plugin doesn't provide any operations.</p>
+    )
+  }
+  <h2>Data Types</h2>
+  {
+    data_types.length > 0 ? (
+      <ul>
+        {data_types.map(([k, v]) => (
+          <li>
+            <a href={`/plugins/${plugin}/data_types/${k}`}>{k}</a>:{" "}
+            {v.documentation.description}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>This plugin doesn't provide any data types.</p>
+    )
+  }
+</Layout>

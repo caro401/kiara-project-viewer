@@ -15,14 +15,11 @@ export async function getStaticPaths() {
 }
 
 const { pipeline } = Astro.params;
+const all_data_types = await apiClient.list_data_types();
+
 const data = await apiClient.get_pipeline_structure(pipeline);
 ---
 
 <Layout title={pipeline}>
-  <main
-    class="prose prose-slate dark:prose-invert max-w-screen-lg w-full mx-auto px-4"
-  >
-    <a class="m-4" href="/public">&larr;back to pipelines list</a>
-    <Pipeline pipeline={data} client:load />
-  </main>
+  <Pipeline pipeline={data} {all_data_types} client:load />
 </Layout>

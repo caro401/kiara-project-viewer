@@ -24,65 +24,56 @@ const output_operations = await apiClient.list_operations({
 ---
 
 <Layout title={data_type}>
-  <main
-    class="prose prose-slate dark:prose-invert max-w-screen-xl w-full mx-auto px-4"
+  <dl
+    class="mt-4 rounded-md w-fit bg-slate-100 dark:bg-slate-800 px-4 py-3 text-sm leading-6 grid gap-y-3 gap-x-4 grid-cols-[max-content_1fr]"
   >
-    <nav>
-      <a class="m-4" href="/"> Home</a>
-      <a href={`/plugins/${plugin}`}>&larr; Back to package</a>
-    </nav>
-    <h1>{data_type}</h1>
-    <dl
-      class="mt-4 rounded-md w-fit bg-slate-100 dark:bg-slate-800 px-4 py-3 text-sm leading-6 grid gap-y-3 gap-x-4 grid-cols-[max-content_1fr]"
-    >
-      <dt class="font-bold">Author(s)</dt>
-      <dd>
-        {data.authors?.authors.map((a) => `${a.name} (${a.email})`).join(", ")}
-      </dd>
-      <dt class="font-bold">From package</dt>
-      <dd><a href={`/plugins/${plugin}`}>{plugin}</a></dd>
-      <dt class="font-bold">Tags</dt>
-      <dd>{data.context.tags.join(", ")}</dd>
-    </dl>
-    <Doc doc_object={data.documentation} />
-    <h2>Operations which take <code>{data_type}</code> as input</h2>
+    <dt class="font-bold">Author(s)</dt>
+    <dd>
+      {data.authors?.authors.map((a) => `${a.name} (${a.email})`).join(", ")}
+    </dd>
+    <dt class="font-bold">From package</dt>
+    <dd><a href={`/plugins/${plugin}`}>{plugin}</a></dd>
+    <dt class="font-bold">Tags</dt>
+    <dd>{data.context.tags.join(", ")}</dd>
+  </dl>
+  <Doc doc_object={data.documentation} />
+  <h2>Operations which take <code>{data_type}</code> as input</h2>
 
-    <ul>
-      {
-        Object.entries(input_operations).map(([k, v]) => (
-          <li class="card">
-            <OperationSummary operation={v} operation_id={k} />
-          </li>
-        ))
-      }
-    </ul>
-    <h2>Operations which create <code>{data_type}</code> as output</h2>
+  <ul>
+    {
+      Object.entries(input_operations).map(([k, v]) => (
+        <li class="card">
+          <OperationSummary operation={v} operation_id={k} />
+        </li>
+      ))
+    }
+  </ul>
+  <h2>Operations which create <code>{data_type}</code> as output</h2>
 
-    <ul>
-      {
-        Object.entries(output_operations).map(([k, v]) => (
-          <li class="card">
-            <OperationSummary operation={v} operation_id={k} />
-          </li>
-        ))
-      }
-    </ul>
+  <ul>
+    {
+      Object.entries(output_operations).map(([k, v]) => (
+        <li class="card">
+          <OperationSummary operation={v} operation_id={k} />
+        </li>
+      ))
+    }
+  </ul>
 
-    <h2>Implementation</h2>
-    <!--TODO make these be links when there are things to link to-->
-    <dl
-      class="mt-4 rounded-md w-fit bg-slate-100 dark:bg-slate-800 px-4 py-3 text-sm leading-6 grid gap-y-3 gap-x-4 grid-cols-[max-content_1fr]"
-    >
-      <dt class="font-bold">Python class</dt>
-      <dd>
-        <code>{data.python_class.full_name}</code>
-      </dd>
-      <dt class="font-bold">Value class</dt>
-      <dd><code>{data.value_cls.full_name}</code></dd>
-      <dt class="font-bold">Config class</dt>
-      <dd><code>{data.data_type_config_cls.full_name}</code></dd>
-      <dt class="font-bold">Lineage</dt>
-      <dd><code>{data.lineage.join(" → ")}</code></dd>
-    </dl>
-  </main>
+  <h2>Implementation</h2>
+  <!--TODO make these be links when there are things to link to-->
+  <dl
+    class="mt-4 rounded-md w-fit bg-slate-100 dark:bg-slate-800 px-4 py-3 text-sm leading-6 grid gap-y-3 gap-x-4 grid-cols-[max-content_1fr]"
+  >
+    <dt class="font-bold">Python class</dt>
+    <dd>
+      <code>{data.python_class.full_name}</code>
+    </dd>
+    <dt class="font-bold">Value class</dt>
+    <dd><code>{data.value_cls.full_name}</code></dd>
+    <dt class="font-bold">Config class</dt>
+    <dd><code>{data.data_type_config_cls.full_name}</code></dd>
+    <dt class="font-bold">Lineage</dt>
+    <dd><code>{data.lineage.join(" → ")}</code></dd>
+  </dl>
 </Layout>

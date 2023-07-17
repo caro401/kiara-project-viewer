@@ -33,45 +33,9 @@ const plugin_url = operations[0]?.[1].context.references.source_repo.url;
 ---
 
 <Layout title={plugin}>
-  <main
-    class="prose prose-slate dark:prose-invert max-w-screen-xl w-full mx-auto px-4"
-  >
-    <a class="m-4" href="/">&larr; home</a>
-    <h1 class="flex items-center justify-between">
-      {plugin}
-      <PluginGithubLink plugin_name={plugin} {plugin_url} />
-    </h1>
+  <!--TODO do plugin summary info?-->
+  <PluginGithubLink plugin_name={plugin} plugin_url={plugin_url} />
 
-    <!--TODO do plugins have any kind of summary info?-->
-    <h2>Operations</h2>
-    {
-      operations.length > 0 ? (
-        <ul>
-          {operations.map(([k, v]) => (
-            <li>
-              <a href={`/plugins/${plugin}/operations/${k}`}>{k}</a>:{" "}
-              {v.documentation.description}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>This plugin doesn't provide any operations.</p>
-      )
-    }
-    <h2>Data Types</h2>
-    {
-      data_types.length > 0 ? (
-        <ul>
-          {data_types.map(([k, v]) => (
-            <li>
-              <a href={`/plugins/${plugin}/data_types/${k}`}>{k}</a>:{" "}
-              {v.documentation.description}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>This plugin doesn't provide any data types.</p>
-      )
-    }
-  </main>
+  <p><a href={`${plugin}/usage`}>How to use {plugin}</a></p>
+  <p><a href={`${plugin}/api`}>Plugin API docs for developers</a></p>
 </Layout>

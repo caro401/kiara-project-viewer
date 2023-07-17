@@ -126,6 +126,12 @@ export abstract class KiaraContext {
   ): Promise<string[]>;
 
   public abstract get_operation(operation_id: string): Promise<OperationInfo>;
+  public abstract list_modules(options: {
+    filters?: string[];
+    python_package?: string;
+    // todo moduleInfo type
+  }): Promise<Record<string, any>>;
+  public abstract get_module(module_id: string): Promise<any>;
 
   public abstract validate_inputs(
     inputs: Record<string, any>,
@@ -291,6 +297,11 @@ export class KiaraRestClientContext extends KiaraContext {
     const response = await fetch(url, { method: "GET" });
     return await this.check_status(response);
   }
+  public async get_module(module_id: string): Promise<any> {
+    const url = pathJoin([this.url, "modules", module_id]);
+    const response = await fetch(url, { method: "GET" });
+    return await this.check_status(response);
+  }
   public async get_data_type(data_type_id: string): Promise<OperationInfo> {
     const url = pathJoin([this.url, "data-types", data_type_id]);
     const response = await fetch(url, { method: "GET" });
@@ -427,6 +438,22 @@ export class KiaraRestClientContext extends KiaraContext {
     });
     return await this.check_status(response);
   }
+
+  public async list_modules(options: {
+    filters?: string[];
+    python_package?: string;
+    // todo moduleInfo type
+  }): Promise<Record<string, any>> {
+    const url = pathJoin([this.url, "modules"]);
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        ...options,
+      }),
+    });
+    return await this.check_status(response);
+  }
+
   private async check_status(response: Response) {
     if (response.status >= 200 && response.status <= 300) {
       return await response.json();

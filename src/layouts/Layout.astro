@@ -1,20 +1,57 @@
 ---
-export interface Props {
-  title: string;
-}
-const { title } = Astro.props;
+import apiClient from "../lib/kiara_api";
+const { title, displayTitle } = Astro.props;
 import "../styles/global.css";
+
+import AppShell from "../components/AppShell.svelte";
+import PageFind from "@components/PageFind.astro";
+const installed_plugins = await apiClient.list_installed_plugins();
+
+const navigation = [
+  // TODO getting started guide!
+  { name: "Getting started", href: "/plugins/kiara" },
+  // TODO what's the right name for these? package/plugin/module/something else?
+  { name: "Example Workflows", href: "/pipelines" },
+
+  {
+    name: "Plugins",
+    children: [
+      { name: "kiara core", href: "/plugins/kiara" },
+      ...Object.entries(installed_plugins).map(([name, version]) => {
+        let normalized_name = name.replaceAll("-", "_");
+        return {
+          name: normalized_name,
+          href: `/plugins/${normalized_name}`,
+        };
+      }),
+    ],
+  },
+];
 ---
 
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <link href="/_pagefind/pagefind-ui.css" rel="stylesheet" />
+    <script src="/_pagefind/pagefind-ui.js" type="text/javascript"></script>
     <title>{title}</title>
   </head>
   <body>
-    <slot />
+    <div>
+      <AppShell
+        client:load
+        items={navigation}
+        currentPath={Astro.url.pathname}
+      />
+      <main
+        class="py-10 lg:pl-80 prose prose-slate dark:prose-invert max-w-screen-xl w-full mx-auto px-4 sm:px-6 lg:px-8"
+      >
+        {displayTitle !== false && <h1>{title}</h1>}
+        <slot />
+      </main>
+    </div>
   </body>
+  <PageFind />
 </html>

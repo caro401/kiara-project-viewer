@@ -1,0 +1,25 @@
+---
+import Layout from "@layouts/Layout.astro";
+import apiClient from "@lib/kiara_api";
+import PipelineSummary from "@components/PipelineSummary.svelte";
+
+const installed_plugins = await apiClient.list_installed_plugins();
+let plugins = Object.keys(installed_plugins)
+  .sort((a, b) => a.localeCompare(b))
+  .map((p) => p.replaceAll("-", "_"));
+---
+
+<Layout title="Available Packages">
+  <ul class="mb-8 text-lg">
+    <li>
+      <a href={`/plugins/kiara`}>kiara base package</a>
+    </li>
+    {
+      plugins.map((p) => (
+        <li>
+          <a href={`/plugins/${p}`}>{p}</a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
