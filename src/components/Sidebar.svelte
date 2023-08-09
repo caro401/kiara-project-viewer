@@ -28,7 +28,7 @@
               >{item.name}</a
             >
           {:else}
-            <Disclosure let:open>
+            <Disclosure let:open defaultOpen={true}>
               <DisclosureButton
                 class={`${
                   item.href === currentPath

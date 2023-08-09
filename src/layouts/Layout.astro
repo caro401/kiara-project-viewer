@@ -1,20 +1,38 @@
 ---
 import apiClient from "../lib/kiara_api";
 const { title, displayTitle } = Astro.props;
+import { getCollection } from "astro:content";
+
 import "../styles/global.css";
 
 import AppShell from "../components/AppShell.svelte";
-import PageFind from "@components/PageFind.astro";
 const installed_plugins = await apiClient.list_installed_plugins();
 
+const tutorials = await getCollection("tutorials");
+
+const guides = await getCollection("guides");
 const navigation = [
   // TODO getting started guide!
-  { name: "Getting started", href: "/plugins/kiara" },
+  { name: "Quick start", href: "/plugins/kiara" },
+  {
+    name: "Tutorials",
+    children: tutorials.map((t) => ({
+      name: t.data.title,
+      href: `/tutorials/${t.slug}`,
+    })),
+  },
+  {
+    name: "How-to Guides",
+    children: guides.map((t) => ({
+      name: t.data.title,
+      href: `/guides/${t.slug}`,
+    })),
+  },
   // TODO what's the right name for these? package/plugin/module/something else?
   { name: "Example Workflows", href: "/pipelines" },
 
   {
-    name: "Plugins",
+    name: "Reference",
     children: [
       { name: "kiara core", href: "/plugins/kiara" },
       ...Object.entries(installed_plugins).map(([name, version]) => {
@@ -53,5 +71,4 @@ const navigation = [
       </main>
     </div>
   </body>
-  <PageFind />
 </html>

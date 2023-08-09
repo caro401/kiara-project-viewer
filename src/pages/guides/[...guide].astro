@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const howToGuides = await getCollection("guides");
+  return howToGuides.map((entry) => ({
+    params: { guide: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Layout title={`${entry.data.title} - Kiara how-to guide`} displayTitle={false}>
+  <h1>{entry.data.title}</h1>
+  <Content />
+</Layout>

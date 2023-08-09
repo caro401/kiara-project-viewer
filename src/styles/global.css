@@ -53,10 +53,32 @@
     /* Tailwind's default styles adds `backticks` around code, I don't think this is useful here */
     content: none !important;
   }
+  *:not(.card) > dl {
+    @apply mt-4 rounded-md w-fit bg-slate-100 dark:bg-slate-800 px-4 py-3 text-sm leading-6 grid gap-y-3 gap-x-4 grid-cols-[max-content_1fr] max-w-full;
+  }
+  dt {
+    @apply font-bold;
+  }
 }
 
 @layer components {
   .card {
     @apply bg-white dark:bg-slate-800 rounded-lg shadow list-none w-full;
+  }
+  .prose pre {
+    @apply text-xs;
+  }
+  .admonition {
+    @apply p-4 rounded-md shadow-md text-sm prose max-w-none;
+  }
+  .admonition p {
+    @apply mb-0;
+  }
+  .admonition-note {
+    @apply bg-amber-200 dark:bg-amber-300;
+  }
+
+  .admonition-heading {
+    @apply flex items-center gap-2;
   }
 }

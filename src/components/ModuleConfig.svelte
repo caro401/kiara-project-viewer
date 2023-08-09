@@ -22,7 +22,7 @@
     // sort alphabetically within things of same value of optional
     .sort((a, b) => a.name.localeCompare(b.name))
     // put non-optional things first
-    .sort((a, b) => (a.optional !== b.optional ? (a.optional ? 1 : -1) : 0));
+    .sort((a, b) => (a.required !== b.required ? (a.required ? -1 : 1) : 0));
 </script>
 
 <table class="table-auto z-0">

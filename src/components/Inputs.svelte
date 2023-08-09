@@ -3,7 +3,6 @@
 
   export let fields: { [k: string]: FieldInfo };
   export let all_data_types;
-
   function href_for_line(name) {
     const field_type =
       all_data_types[fields[name].data_type_info.data_type_name];

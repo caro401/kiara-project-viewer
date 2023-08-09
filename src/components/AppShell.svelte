@@ -1,5 +1,5 @@
 <script>
-  import { Bars3 } from "svelte-heros-v2";
+  import { Bars3, MagnifyingGlass } from "svelte-heros-v2";
   import {
     Dialog,
     TransitionChild,
@@ -62,7 +62,7 @@
     <span class="sr-only">Open sidebar</span>
     <Bars3 class="h-6 w-6" aria-hidden="true" />
   </button>
-  <nav class="flex lg:ml-72" aria-label="Breadcrumb">
+  <nav class="flex lg:ml-72 flex-grow" aria-label="Breadcrumb">
     <ol class="flex items-center space-x-2">
       <li>
         <div>
@@ -104,6 +104,11 @@
       {/each}
     </ol>
   </nav>
-
-  <div id="search" />
+  <a
+    href="/search"
+    class="ml-2 inline-flex items-center text-sm font-medium text-slate-700 hover:text-sky-500 dark:text-slate-300 no-underline"
+  >
+    <MagnifyingGlass class="h-5 inline" />
+    <span>Search</span>
+  </a>
 </div>

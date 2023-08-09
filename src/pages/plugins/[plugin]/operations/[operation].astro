@@ -3,6 +3,9 @@ import Layout from "@layouts/Layout.astro";
 import apiClient from "@lib/kiara_api";
 import Doc from "@components/Doc.svelte";
 import Inputs from "@components/Inputs.svelte";
+import UserSummary from "@components/UserSummary.svelte";
+import StepDetails from "@components/StepDetails.svelte";
+import ConcreteModuleConfig from "@components/ConcreteModuleConfig.svelte";
 
 export async function getStaticPaths() {
   const operations = await apiClient.list_operations({
@@ -17,27 +20,36 @@ export async function getStaticPaths() {
 const { operation, plugin } = Astro.params;
 const data = await apiClient.get_operation(operation);
 const all_data_types = await apiClient.list_data_types();
+
+const is_pipeline = data.operation_types.includes("pipeline");
+async function getPipelineData() {
+  // TODO proably don't need this if extra pipelines is fixed in api
+  try {
+    return await apiClient.get_pipeline_structure(operation);
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+}
+const pipeline_data = is_pipeline && (await getPipelineData());
 ---
 
 <Layout title={operation}>
-  <dl
-    class="mt-4 rounded-md w-fit bg-slate-100 dark:bg-slate-800 px-4 py-3 text-sm leading-6 grid gap-y-3 gap-x-4 grid-cols-[max-content_1fr]"
-  >
-    <dt class="font-bold">Author(s)</dt>
-    <dd>
-      {data.authors.authors.map((a) => `${a.name} (${a.email})`).join(", ")}
-    </dd>
-    <dt class="font-bold">From package</dt>
-    <dd><a href={`/plugins/${plugin}`}>{plugin}</a></dd>
-    <dt class="font-bold">Tags</dt>
-    <dd>{data.context.tags.join(", ")}</dd>
-    <dt class="font-bold">Operation type</dt>
-    <dd>{data.operation_types.join(", ")}</dd>
-  </dl>
+  <UserSummary item={data} plugin={plugin} />
   <Doc doc_object={data.documentation} />
   <h2>Inputs</h2>
-  <Inputs fields={data.input_fields} {all_data_types} />
+  <Inputs fields={data.input_fields} all_data_types={all_data_types} />
+  {is_pipeline && <h2>Pipeline steps</h2>}
+  {pipeline_data && <StepDetails pipeline={pipeline_data} />}
   <h2>Outputs</h2>
-  <Inputs fields={data.output_fields} {all_data_types} />
-  <pre>{JSON.stringify(data, null, 2)}</pre>
+  <Inputs fields={data.output_fields} all_data_types={all_data_types} />
+  <h2>Module information</h2>
+  <p>
+    Module <a
+      href={`/plugins/${plugin}/modules/${data.operation.module_type}`}
+      data-pagefind-filter="Module">{data.operation.module_type}</a
+    > with these configuration options:
+  </p>
+  <!--TODO what if this thing is a pipeline?-->
+  <ConcreteModuleConfig config={data.operation.module_config} />
 </Layout>

@@ -12,22 +12,29 @@
     "lint": "astro check && svelte-check && eslint \"src/**/*.{js,astro,svelte}\" && tsc --noEmit",
     "backend": "pixi run backend",
     "sync-models": "pixi run export-models",
-    "postbuild": "pagefind --source dist/ --root-selector main --force-language en --verbose"
+    "pagefind": "pagefind --source dist/ --root-selector main --force-language en --serve ",
+    "postbuild": "pagefind --source dist/ --root-selector main --force-language en"
   },
   "dependencies": {
+    "@astrojs/mdx": "^0.19.7",
     "@astrojs/svelte": "^3.1.0",
     "@astrojs/tailwind": "^4.0.0",
     "@rgossiaux/svelte-headlessui": "^2.0.0",
     "astro": "^2.7.1",
     "elkjs": "^0.8.2",
     "marked": "^5.1.0",
+    "remark": "^14.0.3",
+    "remark-directive": "^2.0.1",
+    "remark-toc": "^8.0.1",
     "sanitize-html": "^2.11.0",
     "svelte": "^3",
     "svelte-json-tree": "^1.0.0",
     "svelte-markdown": "^0.2.3",
     "svelte-table": "^0.6.1",
     "svelvet": "^2.0.2",
-    "tailwindcss": "^3.3.2"
+    "tailwindcss": "^3.3.2",
+    "unified": "^10.1.2",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",

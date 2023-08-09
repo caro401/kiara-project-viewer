@@ -3,6 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import apiClient from "@lib/kiara_api";
 import Doc from "@components/Doc.svelte";
 import OperationSummary from "@components/OperationSummary.svelte";
+import UserSummary from "@components/UserSummary.svelte";
 
 export async function getStaticPaths() {
   const types = await apiClient.list_data_types([]);
@@ -24,22 +25,11 @@ const output_operations = await apiClient.list_operations({
 ---
 
 <Layout title={data_type}>
-  <dl
-    class="mt-4 rounded-md w-fit bg-slate-100 dark:bg-slate-800 px-4 py-3 text-sm leading-6 grid gap-y-3 gap-x-4 grid-cols-[max-content_1fr]"
-  >
-    <dt class="font-bold">Author(s)</dt>
-    <dd>
-      {data.authors?.authors.map((a) => `${a.name} (${a.email})`).join(", ")}
-    </dd>
-    <dt class="font-bold">From package</dt>
-    <dd><a href={`/plugins/${plugin}`}>{plugin}</a></dd>
-    <dt class="font-bold">Tags</dt>
-    <dd>{data.context.tags.join(", ")}</dd>
-  </dl>
+  <UserSummary item={data} plugin={plugin} />
   <Doc doc_object={data.documentation} />
   <h2>Operations which take <code>{data_type}</code> as input</h2>
 
-  <ul>
+  <ul class="pl-0">
     {
       Object.entries(input_operations).map(([k, v]) => (
         <li class="card">
@@ -50,7 +40,7 @@ const output_operations = await apiClient.list_operations({
   </ul>
   <h2>Operations which create <code>{data_type}</code> as output</h2>
 
-  <ul>
+  <ul class="pl-0">
     {
       Object.entries(output_operations).map(([k, v]) => (
         <li class="card">

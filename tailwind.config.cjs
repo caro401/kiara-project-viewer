@@ -5,4 +5,9 @@ module.exports = {
     extend: {},
   },
   plugins: [require("@tailwindcss/typography")],
+    safelist: [
+        'admonition',
+    'admonition-note',
+        'admonition-heading',
+]
 };
